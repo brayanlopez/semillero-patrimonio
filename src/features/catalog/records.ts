@@ -1,0 +1,137 @@
+import type { CatalogRecord } from "../../types/catalog";
+
+export const catalogRecords: CatalogRecord[] = [
+  {
+    id: 1,
+    code: "F_0001",
+    title: "Retrato en la oscuridad",
+    creator: "",
+    type: "Audiovisual",
+    support: "Filmico",
+    year: 0,
+    period: "",
+    duration: "",
+    language: "Español",
+    color: "Color",
+    format: "",
+    description: "",
+    topics: [],
+  },
+  {
+    id: 2,
+    code: "LPAT-0002",
+    title: "Ejercicios de luz",
+    creator: "Colectivo de realización",
+    type: "Experimental",
+    support: "VHS",
+    year: 1994,
+    period: "1990",
+    duration: "12 min",
+    language: "Español",
+    color: "Color",
+    format: "VHS",
+    description:
+      "Pieza experimental construida a partir de exploraciones visuales, composición y tratamiento de la luz. Registro de ejemplo para visualizar la ficha pública.",
+    topics: ["Experimentación", "Imagen", "Luz"],
+  },
+  {
+    id: 3,
+    code: "LPAT-0003",
+    title: "Voces del territorio",
+    creator: "Jorge A. Cárdenas",
+    type: "Documental",
+    support: "DVD",
+    year: 2004,
+    period: "2000",
+    duration: "48 min",
+    language: "Español",
+    color: "Color",
+    format: "DVD",
+    description:
+      "Documental de ejemplo que reúne testimonios y relatos relacionados con territorio, identidad y memoria colectiva.",
+    topics: ["Territorio", "Testimonio", "Identidad"],
+  },
+  {
+    id: 4,
+    code: "LPAT-0004",
+    title: "Ensayo para una imagen",
+    creator: "Laura Pineda",
+    type: "Ficción",
+    support: "Betacam",
+    year: 1998,
+    period: "1990",
+    duration: "19 min",
+    language: "Español",
+    color: "Blanco y negro",
+    format: "Betacam SP",
+    description:
+      "Ejercicio de ficción de ejemplo. Esta ficha permite mostrar cómo se presentan los datos básicos de identificación y consulta.",
+    topics: ["Ficción", "Ejercicio académico", "Imagen"],
+  },
+  {
+    id: 5,
+    code: "LPAT-0005",
+    title: "Archivo de una jornada",
+    creator: "Unidad de producción audiovisual",
+    type: "Registro",
+    support: "DVD",
+    year: 2012,
+    period: "2010",
+    duration: "36 min",
+    language: "Español",
+    color: "Color",
+    format: "DVD",
+    description:
+      "Registro audiovisual de una actividad académica. La ficha pública reúne los metadatos necesarios para identificar el material.",
+    topics: ["Universidad", "Registro", "Memoria institucional"],
+  },
+  {
+    id: 6,
+    code: "LPAT-0006",
+    title: "Paisaje en tránsito",
+    creator: "Andrés Beltrán",
+    type: "Experimental",
+    support: "Película 16 mm",
+    year: 1983,
+    period: "1980",
+    duration: "8 min",
+    language: "Sin diálogo",
+    color: "Color",
+    format: "16 mm",
+    description:
+      "Pieza experimental de ejemplo que explora el paisaje y el movimiento desde el soporte fotoquímico.",
+    topics: ["Paisaje", "16 mm", "Experimentación"],
+  },
+];
+
+export const visualClasses = ["", "v2", "v3", "v4", "v5"];
+
+export const supportOptions = [
+  "Filmico",
+  "U-Matic",
+  "DVD",
+  "DVCAM",
+  "VHS",
+  "Película 16 mm",
+];
+
+export const typeOptions = [
+  "Audiovisual",
+  "Texto",
+  "Carpeta de producción",
+  "Documento/Audiovisual",
+  "Documento-Carpeta TG",
+  "Documento",
+  "Carpetas (Texto y Audiovisual)",
+  "Documental",
+  "Ficción",
+  "Registro",
+  "Experimental",
+];
+
+export const periodOptions = [
+  { value: "1980", label: "1980–1989" },
+  { value: "1990", label: "1990–1999" },
+  { value: "2000", label: "2000–2009" },
+  { value: "2010", label: "2010–2019" },
+];

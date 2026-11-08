@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+
+:root {
+  --ink: #202522;
+  --muted: #6d746e;
+  --paper: #f3f1e9;
+  --white: #fbfaf6;
+  --line: #d8d7cd;
+  --red: #a64c3e;
+  --red-dark: #813b32;
+  --green: #536b5b;
+  --pale: #e7e8df;
+  --gold: #c39a58;
+  --mono: "DM Mono", monospace;
+  --sans: "DM Sans", sans-serif;
+  --serif: "Playfair Display", serif;
+}
