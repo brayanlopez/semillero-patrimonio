@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageSection from "../../shared/ui/PageSection";
 import FilterSidebar from "./FilterSidebar";
 import RecordCard from "./RecordCard";
@@ -19,6 +19,19 @@ const CatalogSection = ({ active, onOpenDetail }: CatalogSectionProps) => {
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState<CatalogFilters>(emptyFilters);
   const [layout, setLayout] = useState<CatalogLayout>("cards");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // On mobile, always show cards. On desktop/tablet, respect the user's choice
+  const effectiveLayout = isMobile ? "cards" : layout;
 
   const filtered = filterCatalogRecords(query, filters);
 
@@ -61,22 +74,24 @@ const CatalogSection = ({ active, onOpenDetail }: CatalogSectionProps) => {
               <div className="result-count">
                 {String(filtered.length).padStart(2, "0")} REGISTROS
               </div>
-              <button
-                type="button"
-                className="view-toggle-btn"
-                onClick={toggleLayout}
-                aria-label={
-                  layout === "cards"
-                    ? "Cambiar a vista de tabla"
-                    : "Cambiar a vista de tarjetas"
-                }
-              >
-                {layout === "cards" ? "Vista tabla ☰" : "Vista tarjetas ⊞"}
-              </button>
+              {!isMobile && (
+                <button
+                  type="button"
+                  className="view-toggle-btn"
+                  onClick={toggleLayout}
+                  aria-label={
+                    layout === "cards"
+                      ? "Cambiar a vista de tabla"
+                      : "Cambiar a vista de tarjetas"
+                  }
+                >
+                  {layout === "cards" ? "Vista tabla ☰" : "Vista tarjetas ⊞"}
+                </button>
+              )}
             </div>
           </div>
           {filtered.length ? (
-            layout === "cards" ? (
+            effectiveLayout === "cards" ? (
               <div className="catalog-grid">
                 {filtered.map((record, index) => (
                   <RecordCard

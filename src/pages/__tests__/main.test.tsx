@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import MainPage from "../main";
@@ -16,8 +16,11 @@ describe("MainPage Integration", () => {
     const homeSection = document.getElementById("home");
     expect(homeSection).toHaveClass("active");
 
-    // Click catalog button in navigation
-    const catalogNavBtn = screen.getByRole("button", { name: "Catálogo" });
+    // Get desktop nav and click catalog button in navigation
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    const catalogNavBtn = within(desktopNav).getByRole("button", { name: "Catálogo" });
     await user.click(catalogNavBtn);
 
     const catalogSection = document.getElementById("catalog");
@@ -34,18 +37,24 @@ describe("MainPage Integration", () => {
     render(<MainPage />);
 
     // Go to catalog
-    await user.click(screen.getByRole("button", { name: "Catálogo" }));
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "Catálogo" }),
+    );
 
-    // Click on a record card
+    // Click on a record card (using actual record)
     const card = screen.getByRole("button", {
-      name: /Ver ficha de Memorias de una ciudad/i,
+      name: /Ver ficha de Ejercicios de luz/i,
     });
     await user.click(card);
 
     // Detail section should be active
     const detailSection = document.getElementById("detail");
     expect(detailSection).toHaveClass("active");
-    expect(screen.getByText("LPAT / LPAT-0001")).toBeInTheDocument();
+    // Check for the code in the detail-art section which shows "LPAT / LPAT-0002"
+    expect(screen.getByText(/LPAT \/ LPAT-0002/)).toBeInTheDocument();
 
     // Click back to catalog
     const backBtn = screen.getByRole("button", {
@@ -62,7 +71,12 @@ describe("MainPage Integration", () => {
     const user = userEvent.setup();
     render(<MainPage />);
 
-    await user.click(screen.getByRole("button", { name: "El laboratorio" }));
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "El laboratorio" }),
+    );
 
     const aboutSection = document.getElementById("about");
     expect(aboutSection).toHaveClass("active");

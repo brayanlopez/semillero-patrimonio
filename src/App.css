@@ -44,7 +44,8 @@ header {
   display: flex;
   align-items: center;
   gap: 14px;
-  min-width: 260px;
+  flex-shrink: 0;
+  min-width: 0;
 }
 .brand-mark {
   width: 43px;
@@ -70,12 +71,15 @@ header {
   letter-spacing: 0.04em;
   margin-top: 4px;
 }
-nav {
+
+/* Desktop navigation */
+.desktop-nav {
   display: flex;
   align-items: center;
   gap: 28px;
 }
-nav button {
+
+.desktop-nav button {
   border: 0;
   background: none;
   color: #535a54;
@@ -84,12 +88,15 @@ nav button {
   text-transform: uppercase;
   padding: 9px 0;
   position: relative;
+  white-space: nowrap;
 }
-nav button.active,
-nav button:hover {
+
+.desktop-nav button.active,
+.desktop-nav button:hover {
   color: var(--red-dark);
 }
-nav button.active:after {
+
+.desktop-nav button.active:after {
   content: "";
   height: 2px;
   background: var(--red);
@@ -98,14 +105,118 @@ nav button.active:after {
   left: 0;
   right: 0;
 }
-.nav-cta {
+
+/* Mobile menu button */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger .line {
+  width: 24px;
+  height: 2px;
+  background: var(--ink);
+  transition: all 0.3s ease;
+  border-radius: 1px;
+}
+
+.mobile-menu-btn[aria-expanded="true"] .line-1 {
+  transform: rotate(45deg) translate(10px, 10px);
+}
+
+.mobile-menu-btn[aria-expanded="true"] .line-2 {
+  opacity: 0;
+}
+
+.mobile-menu-btn[aria-expanded="true"] .line-3 {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile navigation */
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  flex-direction: column;
+  gap: 0;
+  z-index: 25;
+}
+
+.mobile-nav.open {
+  display: flex;
+}
+
+.mobile-nav button {
+  border: 0;
+  background: none;
+  color: #535a54;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 24px;
+  position: relative;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mobile-nav button:last-child {
+  border-bottom: 0;
+}
+
+.mobile-nav button:hover {
+  background: var(--pale);
+  color: var(--red-dark);
+}
+
+.mobile-nav button.active {
+  color: var(--red-dark);
+}
+
+.mobile-nav button.active:after {
+  display: none;
+}
+
+.mobile-nav .nav-cta {
+  border: 0;
+  padding: 16px 24px !important;
+  color: var(--ink) !important;
+  margin: 8px 0 0 0;
+}
+
+.mobile-nav .nav-cta:hover {
+  background: var(--pale);
+}
+
+.desktop-nav .nav-cta {
   border: 1px solid var(--ink);
   padding: 11px 15px !important;
   color: var(--ink) !important;
 }
-.nav-cta:after {
+
+.desktop-nav .nav-cta:after {
   display: none;
 }
+
 main {
   max-width: 1280px;
   margin: auto;
@@ -530,17 +641,19 @@ footer {
   align-items: center;
   gap: 15px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 .searchbox {
   display: flex;
   align-items: center;
   gap: 10px;
   flex: 1;
-  max-width: 470px;
+  min-width: 200px;
 }
 .searchbox input {
   font-size: 12px;
   padding: 13px;
+  flex: 1;
 }
 .result-count {
   font: 10px var(--mono);
@@ -580,6 +693,7 @@ footer {
   border-collapse: collapse;
   font-size: 12px;
   text-align: left;
+  min-width: 800px;
 }
 .catalog-table thead {
   background: #ecebe2;
@@ -846,6 +960,32 @@ footer {
   .header-inner {
     padding: 15px 24px;
   }
+  .mobile-menu-btn {
+    display: flex;
+  }
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-nav {
+    position: fixed;
+    top: 60px;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  .catalog-table-wrap {
+    overflow-x: auto;
+  }
+  .catalog-table {
+    min-width: 600px;
+  }
+  .catalog-table th,
+  .catalog-table td {
+    padding: 11px 12px;
+    font-size: 11px;
+  }
   .hero {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -895,8 +1035,6 @@ footer {
 @media (max-width: 600px) {
   .header-inner {
     padding: 12px 18px;
-    flex-direction: column;
-    align-items: stretch;
     gap: 12px;
   }
   .brand {
@@ -914,30 +1052,17 @@ footer {
   .brand-name span {
     font-size: 8px;
   }
-  nav {
-    width: 100%;
+  .mobile-menu-btn {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 16px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 3px;
   }
-  nav::-webkit-scrollbar {
-    display: none;
-  }
-  nav button {
-    font-size: 10px;
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding: 8px 0;
-  }
-  .nav-cta {
-    padding: 7px 12px !important;
-    font-size: 9.5px;
-    margin-left: auto;
+  .mobile-nav {
+    position: fixed;
+    top: 58px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-height: calc(100vh - 58px);
+    overflow-y: auto;
   }
   main {
     padding: 0 18px;
@@ -1073,16 +1198,19 @@ footer {
     align-items: center;
     width: 100%;
   }
-  .view-toggle-btn {
-    font-size: 9.5px;
-    padding: 7px 11px;
-  }
-  .catalog-table th,
-  .catalog-table td {
-    padding: 11px 12px;
-  }
   .searchbox {
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: auto;
+  }
+  .searchbox span {
+    display: none;
+  }
+  .searchbox input {
+    width: 100%;
     max-width: none;
+    font-size: 14px;
+    padding: 12px;
   }
   .catalog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1149,17 +1277,17 @@ footer {
     font-size: 7.5px;
     margin-top: 2px;
   }
-  nav {
-    gap: 12px;
-    padding-bottom: 2px;
+  .mobile-menu-btn {
+    display: flex;
   }
-  nav button {
-    font-size: 9.5px;
-    padding: 6px 0;
-  }
-  .nav-cta {
-    padding: 6px 10px !important;
-    font-size: 9px;
+  .mobile-nav {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-height: calc(100vh - 54px);
+    overflow-y: auto;
   }
   .hero {
     padding: 26px 0 20px;

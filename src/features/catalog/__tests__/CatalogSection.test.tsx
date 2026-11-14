@@ -26,11 +26,11 @@ describe("CatalogSection", () => {
     const searchInput = screen.getByPlaceholderText(
       "Buscar por título, autor, tema o código…",
     );
-    await user.type(searchInput, "Memorias");
+    await user.type(searchInput, "Ejercicios");
 
     expect(screen.getByText("01 REGISTROS")).toBeInTheDocument();
-    expect(screen.getByText("Memorias de una ciudad")).toBeInTheDocument();
-    expect(screen.queryByText("Ejercicios de luz")).not.toBeInTheDocument();
+    expect(screen.getByText("Ejercicios de luz")).toBeInTheDocument();
+    expect(screen.queryByText("Voces del territorio")).not.toBeInTheDocument();
   });
 
   it("shows empty state message when no results match", async () => {
@@ -70,11 +70,11 @@ describe("CatalogSection", () => {
     render(<CatalogSection active={true} onOpenDetail={handleOpenDetail} />);
 
     const card = screen.getByRole("button", {
-      name: /Ver ficha de Memorias de una ciudad/i,
+      name: /Ver ficha de Ejercicios de luz/i,
     });
     await user.click(card);
 
-    expect(handleOpenDetail).toHaveBeenCalledWith(1);
+    expect(handleOpenDetail).toHaveBeenCalledWith(2);
   });
 
   it("switches to table layout when toggle button is clicked and returns to card layout", async () => {
@@ -102,10 +102,10 @@ describe("CatalogSection", () => {
 
     // Test opening detail from table action button
     const openTableBtn = screen.getByRole("button", {
-      name: "Ver ficha de Memorias de una ciudad",
+      name: "Ver ficha de Ejercicios de luz",
     });
     await user.click(openTableBtn);
-    expect(handleOpenDetail).toHaveBeenCalledWith(1);
+    expect(handleOpenDetail).toHaveBeenCalledWith(2);
 
     // Toggle back to card layout
     const toggleBackBtn = screen.getByRole("button", {
@@ -116,7 +116,7 @@ describe("CatalogSection", () => {
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", {
-        name: /Ver ficha de Memorias de una ciudad/i,
+        name: /Ver ficha de Ejercicios de luz/i,
       }),
     ).toBeInTheDocument();
   });

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import MainLayout from "../MainLayout";
@@ -29,7 +29,12 @@ describe("MainLayout", () => {
       </MainLayout>,
     );
 
-    await user.click(screen.getByRole("button", { name: "Catálogo" }));
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "Catálogo" }),
+    );
     expect(handleNavigate).toHaveBeenCalledWith("catalog");
   });
 });

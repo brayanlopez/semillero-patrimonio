@@ -44,15 +44,15 @@ describe("catalogService", () => {
     });
 
     it("filters records by title (case-insensitive and trimmed)", () => {
-      const results = filterCatalogRecords("  memorias  ", emptyFilters);
+      const results = filterCatalogRecords("  ejercicios  ", emptyFilters);
       expect(results.length).toBe(1);
-      expect(results[0].title).toBe("Memorias de una ciudad");
+      expect(results[0].title).toBe("Ejercicios de luz");
     });
 
     it("filters records by creator", () => {
-      const results = filterCatalogRecords("María Fernanda", emptyFilters);
+      const results = filterCatalogRecords("Jorge", emptyFilters);
       expect(results.length).toBe(1);
-      expect(results[0].creator).toBe("María Fernanda Rojas");
+      expect(results[0].creator).toContain("Jorge");
     });
 
     it("filters records by code", () => {
@@ -88,20 +88,20 @@ describe("catalogService", () => {
     it("filters records by period filter", () => {
       const results = filterCatalogRecords("", {
         ...emptyFilters,
-        period: "1980",
+        period: "1990",
       });
       expect(results.length).toBeGreaterThan(0);
-      expect(results.every((r) => r.period === "1980")).toBe(true);
+      expect(results.every((r) => r.period === "1990")).toBe(true);
     });
 
     it("combines text search with multiple filters correctly", () => {
-      const results = filterCatalogRecords("ciudad", {
-        support: "U-Matic",
-        type: "Documental",
-        period: "1980",
+      const results = filterCatalogRecords("luz", {
+        support: "VHS",
+        type: "Experimental",
+        period: "1990",
       });
       expect(results.length).toBe(1);
-      expect(results[0].code).toBe("LPAT-0001");
+      expect(results[0].code).toBe("LPAT-0002");
     });
 
     it("returns empty array if no records match criteria", () => {
@@ -113,10 +113,10 @@ describe("catalogService", () => {
     });
 
     it("returns empty array when filter doesn't match query matches", () => {
-      // "Memorias" exists, but with support U-Matic, not VHS
-      const results = filterCatalogRecords("memorias", {
+      // "luz" exists with VHS support, but if we ask for DVD it won't match
+      const results = filterCatalogRecords("luz", {
         ...emptyFilters,
-        support: "VHS",
+        support: "DVD",
       });
       expect(results).toHaveLength(0);
     });

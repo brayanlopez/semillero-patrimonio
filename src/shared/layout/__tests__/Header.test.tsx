@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import Header from "../Header";
@@ -18,9 +18,12 @@ describe("Header", () => {
 
   it("marks the active page with active class", () => {
     const { rerender } = render(<Header page="home" onNavigate={() => {}} />);
-    const homeBtn = screen.getByRole("button", { name: "Inicio" });
-    const catalogBtn = screen.getByRole("button", { name: "Catálogo" });
-    const aboutBtn = screen.getByRole("button", { name: "El laboratorio" });
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    const homeBtn = within(desktopNav).getByRole("button", { name: "Inicio" });
+    const catalogBtn = within(desktopNav).getByRole("button", { name: "Catálogo" });
+    const aboutBtn = within(desktopNav).getByRole("button", { name: "El laboratorio" });
 
     expect(homeBtn).toHaveClass("active");
     expect(catalogBtn).not.toHaveClass("active");
@@ -39,18 +42,27 @@ describe("Header", () => {
     const handleNavigate = vi.fn();
 
     render(<Header page="home" onNavigate={handleNavigate} />);
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
 
-    await user.click(screen.getByRole("button", { name: "Catálogo" }));
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "Catálogo" }),
+    );
     expect(handleNavigate).toHaveBeenCalledWith("catalog");
 
-    await user.click(screen.getByRole("button", { name: "El laboratorio" }));
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "El laboratorio" }),
+    );
     expect(handleNavigate).toHaveBeenCalledWith("about");
 
-    await user.click(screen.getByRole("button", { name: "Inicio" }));
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "Inicio" }),
+    );
     expect(handleNavigate).toHaveBeenCalledWith("home");
 
     await user.click(
-      screen.getByRole("button", { name: "Explorar archivo ↗" }),
+      within(desktopNav).getByRole("button", { name: "Explorar archivo ↗" }),
     );
     expect(handleNavigate).toHaveBeenCalledWith("catalog");
   });
