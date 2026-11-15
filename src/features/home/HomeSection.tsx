@@ -131,7 +131,7 @@ const HomeSection = ({
           </button>
         </div>
         {projects.map((project) => (
-          <article className="project-feature" key={project.slug}>
+          <article className="project-feature card" key={project.slug}>
             <div className="project-feature-visual">
               {project.image ? (
                 <img

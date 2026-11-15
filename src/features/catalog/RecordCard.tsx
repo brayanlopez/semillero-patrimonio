@@ -12,7 +12,7 @@ const RecordCard = ({ record, index, onOpen }: RecordCardProps) => {
 
   return (
     <article
-      className="item-card"
+      className="item-card card card-interactive"
       tabIndex={0}
       role="button"
       aria-label={`Ver ficha de ${record.title}`}

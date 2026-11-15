@@ -1,0 +1,123 @@
+.about-band {
+  background: #e6e7df;
+  margin: 0 calc(var(--page-x) * -1);
+  padding: 62px var(--page-x);
+}
+
+.about-inner {
+  max-width: var(--container-inner);
+  margin: auto;
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: var(--space-19);
+}
+
+.about-inner h2 {
+  font: 600 38px / 1.1 var(--serif);
+  margin: var(--space-6) 0;
+}
+
+.about-inner p {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  color: #59625b;
+  margin: 0;
+  max-width: 670px;
+}
+
+.about-copy {
+  display: grid;
+  align-content: start;
+  gap: 0;
+  max-width: 670px;
+}
+
+.about-copy p + p {
+  margin-top: var(--space-10);
+  padding-top: var(--space-10);
+  border-top: 1px solid var(--line-subtle);
+}
+
+.about-band-standalone {
+  margin: 35px calc(var(--page-x) * -1) 70px;
+}
+
+.about-lines-block {
+  padding: 0 0 var(--space-19);
+  max-width: 760px;
+}
+
+.about-lines-title {
+  font: 600 var(--text-6xl) var(--serif);
+  margin: var(--space-6) 0 25px;
+}
+
+@media (max-width: 850px) {
+  .about-band {
+    padding: 50px var(--page-x);
+  }
+
+  .about-band-standalone {
+    margin: var(--space-12) calc(var(--page-x) * -1) 50px;
+  }
+
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-11);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-band {
+    padding: 42px var(--page-x);
+  }
+
+  .about-band-standalone {
+    margin: var(--space-11) calc(var(--page-x) * -1) 45px;
+  }
+
+  .about-inner h2 {
+    font-size: 30px;
+  }
+
+  .about-inner p {
+    font-size: 13.5px;
+  }
+
+  .about-lines-block {
+    padding: 0 0 50px;
+  }
+
+  .about-lines-title {
+    font-size: var(--text-5xl);
+    margin: var(--space-5) 0 var(--space-10);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-band {
+    padding: 30px var(--page-x);
+  }
+
+  .about-band-standalone {
+    margin: var(--space-9) calc(var(--page-x) * -1) 35px;
+  }
+
+  .about-inner h2 {
+    font-size: var(--text-4xl);
+  }
+
+  .about-inner p {
+    font-size: 12.5px;
+    line-height: var(--leading-normal);
+  }
+
+  .about-lines-block {
+    padding: 0 0 35px;
+  }
+
+  .about-lines-title {
+    font-size: var(--text-3xl);
+    margin: var(--space-5) 0 var(--space-8);
+  }
+}

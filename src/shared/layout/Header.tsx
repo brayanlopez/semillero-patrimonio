@@ -36,9 +36,6 @@ const NavigationMenu = ({ page, onNavigate }: NavigationMenuProps) => (
         </button>
       );
     })}
-    <button className="nav-cta" onClick={() => onNavigate("catalog")}>
-      Explorar archivo ↗
-    </button>
   </>
 );
 

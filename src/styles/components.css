@@ -1,0 +1,252 @@
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.kicker {
+  font: var(--text-xs) var(--mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.meta {
+  font: var(--text-2xs) var(--mono);
+  color: var(--red-dark);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--space-10);
+  margin-bottom: var(--space-11);
+}
+
+.section-head h2 {
+  font: 600 var(--text-6xl) var(--serif);
+  margin: var(--space-4) 0 0;
+  letter-spacing: -0.02em;
+}
+
+.text-link {
+  border: 0;
+  background: none;
+  color: var(--red-dark);
+  font: var(--text-sm) var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--red);
+  padding: 7px 0;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: var(--border-strong);
+  background: var(--ink);
+  color: #fff;
+  padding: 13px 19px;
+  font-size: var(--text-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: var(--transition-fast);
+}
+
+.btn:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn.secondary:hover {
+  background: var(--pale);
+}
+
+.card {
+  background: var(--white);
+  border: var(--border);
+  min-width: 0;
+}
+
+.card-interactive {
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.card-interactive:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.catalog-head {
+  padding: 55px 0 32px;
+  border-bottom: var(--border);
+}
+
+.catalog-head h1 {
+  font: 600 var(--text-7xl) var(--serif);
+  margin: var(--space-6) 0 var(--space-4);
+  letter-spacing: -0.03em;
+}
+
+.catalog-head p {
+  color: var(--muted);
+  font-size: var(--text-md);
+  line-height: 1.7;
+  max-width: 650px;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 50px var(--space-10);
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  font-size: var(--text-md);
+}
+
+.back {
+  border: 0;
+  background: none;
+  padding: var(--space-4) 0;
+  color: var(--red-dark);
+  font: var(--text-xs) var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pill {
+  padding: 7px 9px;
+  background: #e4e6dd;
+  color: #536b5b;
+  font: var(--text-2xs) var(--mono);
+  letter-spacing: 0.05em;
+}
+
+.data-table {
+  border-top: var(--border);
+  margin-top: 25px;
+}
+
+.data-row {
+  display: grid;
+  grid-template-columns: 145px 1fr;
+  gap: 15px;
+  padding: var(--space-6) 0;
+  border-bottom: var(--border);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.data-row .key {
+  font: var(--text-2xs) var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.notice {
+  margin-top: var(--space-11);
+  padding: 15px 17px;
+  background: #e9e8df;
+  border-left: 3px solid var(--gold);
+  font-size: var(--text-xs);
+  line-height: 1.65;
+  color: #626960;
+}
+
+@media (max-width: 600px) {
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
+  }
+
+  .section-head h2 {
+    font-size: var(--text-5xl);
+  }
+
+  .catalog-head {
+    padding: 38px 0 var(--space-11);
+  }
+
+  .catalog-head h1 {
+    font-size: clamp(32px, 8vw, 42px);
+  }
+
+  .data-row {
+    grid-template-columns: 120px 1fr;
+    gap: var(--space-6);
+    padding: 11px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-4);
+    margin-top: var(--space-9);
+  }
+
+  .actions .btn {
+    width: 100%;
+    text-align: center;
+    padding: var(--space-6) var(--space-7);
+    font-size: 10.5px;
+  }
+
+  .section-head h2 {
+    font-size: var(--text-4xl);
+  }
+
+  .catalog-head {
+    padding: 26px 0 var(--space-8);
+  }
+
+  .catalog-head h1 {
+    font-size: clamp(26px, 8vw, 34px);
+  }
+
+  .pill {
+    font-size: 8.5px;
+    padding: 5px var(--space-4);
+  }
+
+  .data-table {
+    margin-top: var(--space-8);
+  }
+
+  .data-row {
+    grid-template-columns: 1fr;
+    gap: 3px;
+    padding: 9px 0;
+  }
+
+  .data-row .key {
+    font-size: 8.5px;
+  }
+
+  .notice {
+    font-size: 9.5px;
+    padding: var(--space-6) var(--space-7);
+    margin-top: var(--space-9);
+  }
+}

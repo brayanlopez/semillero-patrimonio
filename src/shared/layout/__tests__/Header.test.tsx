@@ -147,10 +147,5 @@ describe("Header", () => {
       within(desktopNav).getByRole("button", { name: "Inicio" }),
     );
     expect(handleNavigate).toHaveBeenCalledWith("home");
-
-    await user.click(
-      within(desktopNav).getByRole("button", { name: "Explorar archivo ↗" }),
-    );
-    expect(handleNavigate).toHaveBeenCalledWith("catalog");
   });
 });

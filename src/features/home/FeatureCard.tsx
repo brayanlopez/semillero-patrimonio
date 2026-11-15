@@ -16,7 +16,7 @@ const FeatureCard = ({
   foot,
 }: FeatureCardProps) => {
   return (
-    <article className="feature-card">
+    <article className="feature-card card">
       <div className={`feature-image${imageClass ? ` ${imageClass}` : ""}`}>
         <small>{small}</small>
         <div className="shape"></div>

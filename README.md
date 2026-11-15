@@ -16,8 +16,8 @@ de catalogación definitivo.
 - [Vite 8](https://vite.dev/) como servidor de desarrollo y empaquetador.
 - [Vitest](https://vitest.dev/) y [React Testing Library](https://testing-library.com/) para pruebas unitarias y de integración.
 - [Oxlint](https://oxc.rs/docs/guide/usage/linter) para análisis estático.
-- CSS plano con tokens globales en `src/styles/tokens.css` y estilos de la
-  aplicación en `src/App.css`.
+- CSS plano organizado por capas: tokens globales en `src/styles/tokens.css`,
+  base y layout compartidos, y estilos por sección en `src/styles/`.
 
 ## Instalación
 
@@ -104,14 +104,21 @@ src/
 │   ├── main.tsx                        # Orquesta páginas, navegación y selección
 │   └── __tests__/                      # Pruebas de navegación e integración
 ├── styles/
-│   └── tokens.css                      # Fuentes y variables globales de diseño
+│   ├── tokens.css                      # Fuentes, color, tipografía y espaciado
+│   ├── base.css                        # Reset y estilos base del documento
+│   ├── layout.css                      # Header, navegación, main y footer
+│   ├── components.css                  # Botones, tarjetas y primitivas compartidas
+│   ├── home.css                        # Estilos de la página de inicio
+│   ├── about.css                       # Estilos de la sección del laboratorio
+│   ├── catalog.css                     # Estilos del catálogo y sus filtros
+│   ├── detail.css                      # Estilos de la ficha de un registro
+│   └── projects.css                    # Estilos de proyectos y su detalle
 ├── test/
 │   └── setup.ts                        # Configuración global de pruebas y matchers
 ├── types/
 │   ├── catalog.ts                      # Tipos CatalogRecord y CatalogFilters
 │   └── navigation.ts                   # Tipos de navegación PageId
 ├── App.tsx
-├── App.css
 └── main.tsx                            # Punto de entrada de React
 ```
 

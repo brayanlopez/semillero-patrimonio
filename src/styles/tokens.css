@@ -1,17 +1,104 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
 
 :root {
+  /* Palette */
   --ink: #202522;
   --muted: #6d746e;
   --paper: #f3f1e9;
   --white: #fbfaf6;
   --line: #d8d7cd;
+  --line-strong: #9b9c8e;
+  --line-subtle: rgba(37, 43, 40, 0.14);
+  --line-inverse: rgba(245, 238, 225, 0.4);
   --red: #a64c3e;
   --red-dark: #813b32;
   --green: #536b5b;
   --pale: #e7e8df;
   --gold: #c39a58;
+  --surface-dark: #252b28;
+  --surface-mid: #2b332e;
+  --text-on-dark: #f5f0e6;
+  --text-on-dark-muted: #c3c8bf;
+  --text-on-dark-soft: #b8beb5;
+
+  /* Typography families */
   --mono: "DM Mono", monospace;
   --sans: "DM Sans", sans-serif;
   --serif: "Playfair Display", serif;
+
+  /* Typography scale */
+  --text-3xs: 8px;
+  --text-2xs: 9px;
+  --text-xs: 10px;
+  --text-sm: 11px;
+  --text-base: 12px;
+  --text-md: 13px;
+  --text-lg: 14px;
+  --text-xl: 15px;
+  --text-2xl: 18px;
+  --text-3xl: 22px;
+  --text-4xl: 24px;
+  --text-5xl: 28px;
+  --text-6xl: 36px;
+  --text-7xl: 52px;
+  --text-hero: clamp(42px, 5.2vw, 72px);
+
+  /* Line heights */
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+
+  /* Spacing scale */
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 6px;
+  --space-4: 8px;
+  --space-5: 10px;
+  --space-6: 12px;
+  --space-7: 14px;
+  --space-8: 16px;
+  --space-9: 18px;
+  --space-10: 20px;
+  --space-11: 24px;
+  --space-12: 28px;
+  --space-13: 32px;
+  --space-14: 36px;
+  --space-15: 40px;
+  --space-16: 48px;
+  --space-17: 56px;
+  --space-19: 80px;
+
+  /* Layout */
+  --page-x: 34px;
+  --container: 1280px;
+  --container-inner: 1212px;
+
+  /* Borders and radii */
+  --border: 1px solid var(--line);
+  --border-strong: 1px solid var(--ink);
+  --radius-line: 1px;
+  --radius-circle: 50%;
+
+  /* Shadows and motion */
+  --shadow-card: 0 8px 24px #252b2810;
+  --transition-fast: 0.2s;
+}
+
+@media (max-width: 850px) {
+  :root {
+    --page-x: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --page-x: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --page-x: 14px;
+  }
 }

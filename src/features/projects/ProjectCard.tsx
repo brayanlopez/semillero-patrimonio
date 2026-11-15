@@ -10,7 +10,7 @@ const ProjectCard = ({ project, onOpen }: ProjectCardProps) => {
 
   return (
     <article
-      className="project-card"
+      className="project-card card card-interactive"
       tabIndex={0}
       role="button"
       aria-label={`Ver proyecto ${project.title}`}
