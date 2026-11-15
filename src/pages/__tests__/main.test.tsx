@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, within, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import MainPage from "../main";
@@ -20,7 +20,9 @@ describe("MainPage Integration", () => {
     const desktopNav = screen.getByRole("navigation", {
       name: "Navegación principal",
     });
-    const catalogNavBtn = within(desktopNav).getByRole("button", { name: "Catálogo" });
+    const catalogNavBtn = within(desktopNav).getByRole("button", {
+      name: "Catálogo",
+    });
     await user.click(catalogNavBtn);
 
     const catalogSection = document.getElementById("catalog");
@@ -80,5 +82,133 @@ describe("MainPage Integration", () => {
 
     const aboutSection = document.getElementById("about");
     expect(aboutSection).toHaveClass("active");
+  });
+
+  it("activates Projects in the navigation and lists the project", async () => {
+    const user = userEvent.setup();
+    render(<MainPage />);
+
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    const projectsNavBtn = within(desktopNav).getByRole("button", {
+      name: "Proyectos",
+    });
+    await user.click(projectsNavBtn);
+
+    expect(document.getElementById("projects")).toHaveClass("active");
+    expect(projectsNavBtn).toHaveClass("active");
+    expect(
+      screen.getByRole("button", {
+        name: "Ver proyecto Redescubrir la memoria",
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("opens a project detail from the listing and returns to projects", async () => {
+    const user = userEvent.setup();
+    render(<MainPage />);
+
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "Proyectos" }),
+    );
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Ver proyecto Redescubrir la memoria",
+      }),
+    );
+
+    const projectSection = document.getElementById("project");
+    expect(projectSection).toHaveClass("active");
+    expect(
+      screen.getByText(
+        /Redescubrir la memoria es un proyecto del Laboratorio de Patrimonio Audiovisual y Tecnológico/,
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByAltText(
+        "Ministerio de las Culturas, las Artes y los Saberes",
+      ),
+    ).toBeInTheDocument();
+    // Projects stays highlighted while viewing a project detail
+    expect(
+      within(desktopNav).getByRole("button", { name: "Proyectos" }),
+    ).toHaveClass("active");
+
+    await user.click(
+      screen.getByRole("button", { name: "← Volver a proyectos" }),
+    );
+
+    expect(document.getElementById("projects")).toHaveClass("active");
+    expect(document.getElementById("project")).not.toHaveClass("active");
+  });
+
+  it("navigates to projects from the mobile menu", async () => {
+    const user = userEvent.setup();
+    render(<MainPage />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Abrir menú de navegación" }),
+    );
+    const mobileNav = screen.getByRole("navigation", {
+      name: "Navegación móvil",
+    });
+    await user.click(
+      within(mobileNav).getByRole("button", { name: "Proyectos" }),
+    );
+
+    expect(document.getElementById("projects")).toHaveClass("active");
+  });
+
+  it("handles an invalid project identifier with a fallback", () => {
+    render(<MainPage />);
+
+    act(() => {
+      window.dispatchEvent(
+        new PopStateEvent("popstate", {
+          state: {
+            page: "project",
+            selectedId: null,
+            projectSlug: "no-existe",
+          },
+        }),
+      );
+    });
+
+    expect(document.getElementById("project")).toHaveClass("active");
+    expect(
+      screen.getByText(/No encontramos el proyecto solicitado/),
+    ).toBeInTheDocument();
+  });
+
+  it("restores navigation state on browser back and forward", async () => {
+    const user = userEvent.setup();
+    render(<MainPage />);
+
+    const desktopNav = screen.getByRole("navigation", {
+      name: "Navegación principal",
+    });
+    await user.click(
+      within(desktopNav).getByRole("button", { name: "Proyectos" }),
+    );
+    expect(document.getElementById("projects")).toHaveClass("active");
+
+    act(() => {
+      window.dispatchEvent(new PopStateEvent("popstate", { state: null }));
+    });
+    expect(document.getElementById("home")).toHaveClass("active");
+
+    act(() => {
+      window.dispatchEvent(
+        new PopStateEvent("popstate", {
+          state: { page: "projects", selectedId: null, projectSlug: null },
+        }),
+      );
+    });
+    expect(document.getElementById("projects")).toHaveClass("active");
   });
 });

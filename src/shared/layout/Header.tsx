@@ -18,18 +18,24 @@ const NAV_ITEMS: ReadonlyArray<{ id: PageId; label: string }> = [
   { id: "about", label: "El laboratorio" },
 ];
 
+const isNavItemActive = (id: PageId, page: PageId) =>
+  id === page || (id === "projects" && page === "project");
+
 const NavigationMenu = ({ page, onNavigate }: NavigationMenuProps) => (
   <>
-    {NAV_ITEMS.map(({ id, label }) => (
-      <button
-        key={id}
-        className={page === id ? "active" : undefined}
-        aria-current={page === id ? "page" : undefined}
-        onClick={() => onNavigate(id)}
-      >
-        {label}
-      </button>
-    ))}
+    {NAV_ITEMS.map(({ id, label }) => {
+      const active = isNavItemActive(id, page);
+      return (
+        <button
+          key={id}
+          className={active ? "active" : undefined}
+          aria-current={active ? "page" : undefined}
+          onClick={() => onNavigate(id)}
+        >
+          {label}
+        </button>
+      );
+    })}
     <button className="nav-cta" onClick={() => onNavigate("catalog")}>
       Explorar archivo ↗
     </button>

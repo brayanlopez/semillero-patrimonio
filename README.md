@@ -63,6 +63,7 @@ src/
 ├── features/
 │   ├── about/
 │   │   ├── AboutSection.tsx            # Sección "El laboratorio"
+│   │   ├── workLines.ts                # Líneas de trabajo compartidas
 │   │   └── __tests__/                  # Pruebas unitarias de About
 │   ├── catalog/
 │   │   ├── CatalogSection.tsx          # Búsqueda, filtros y vista del catálogo
@@ -75,10 +76,17 @@ src/
 │   ├── detail/
 │   │   ├── DetailSection.tsx           # Ficha descriptiva de un registro
 │   │   └── __tests__/                  # Pruebas de DetailSection
-│   └── home/
+│   ├── home/
 │       ├── HomeSection.tsx             # Página de inicio
 │       ├── FeatureCard.tsx             # Tarjeta destacada de la página de inicio
 │       └── __tests__/                  # Pruebas de Home y FeatureCard
+│   └── projects/
+│       ├── ProjectsSection.tsx         # Listado de proyectos del laboratorio
+│       ├── ProjectDetailSection.tsx    # Página de detalle de un proyecto
+│       ├── ProjectCard.tsx             # Tarjeta reutilizable de proyecto
+│       ├── projects.ts                 # Datos de los proyectos
+│       ├── projectService.ts           # Servicio de acceso a proyectos
+│       └── __tests__/                  # Pruebas de proyectos
 ├── shared/
 │   ├── layout/
 │   │   ├── Header.tsx                  # Encabezado y navegación principal
@@ -184,3 +192,61 @@ modificar el servicio sin cambiar los componentes.
 
 No se requieren cambios adicionales: el servicio y los componentes toman el
 nuevo registro automáticamente.
+
+## Proyectos del laboratorio
+
+La sección "Proyectos" presenta las iniciativas del laboratorio y enlaza con una
+página de detalle propia para cada una. Los datos viven en:
+
+```text
+src/features/projects/projects.ts
+```
+
+Allí se exporta `projects`, un arreglo de objetos `Project`. El acceso pasa por
+`src/features/projects/projectService.ts`, que expone:
+
+```ts
+getProjects(): Project[]
+getProjectBySlug(slug: string | null | undefined): Project | undefined
+```
+
+`ProjectsSection` construye el listado con `getProjects()` y `MainPage` resuelve
+el proyecto seleccionado con `getProjectBySlug`. Si el identificador no existe,
+la página de detalle muestra un mensaje de respaldo en lugar de fallar.
+
+### Cómo agregar un nuevo proyecto
+
+1. Abre `src/features/projects/projects.ts`.
+2. Agrega un objeto `Project` al arreglo `projects` con un `slug` único. Por
+   ejemplo:
+
+```ts
+{
+  slug: "nuevo-proyecto",
+  title: "Título del proyecto",
+  subtitle: "Subtítulo del proyecto",
+  category: "Área o línea de trabajo",
+  status: "En desarrollo",
+  shortDescription: "Descripción breve para el listado y la página de inicio.",
+  description: ["Primer párrafo.", "Segundo párrafo."],
+  scope: ["Alcance uno.", "Alcance dos."],
+  affiliation: ["Laboratorio de Patrimonio Audiovisual y Tecnológico"],
+  acknowledgment: ["Texto de agradecimiento o financiación."],
+  logo: { src: "/ruta-del-logo.png", alt: "Texto alternativo del logo" },
+}
+```
+
+Los campos `status`, `scope`, `acknowledgment`, `logo` e `image` son opcionales.
+La sección de agradecimiento solo se muestra cuando el proyecto declara
+`acknowledgment`.
+
+### Recursos de imagen
+
+Los logos oficiales del Ministerio de las Culturas, las Artes y los Saberes se
+encuentran en `public/` (`logo_mincultura_blanco.png`,
+`logo_mincultura_gris.png` y `logo_mincultura_violeta.png`). El proyecto
+"Redescubrir la memoria" usa la versión blanca sobre el fondo oscuro de la
+sección de agradecimientos. Si el
+archivo no estuviera disponible, debe reponerse el logo oficial en esa carpeta
+y actualizar la ruta en `src/features/projects/projects.ts`; no debe sustituirse
+por una representación textual ni por otro logo.

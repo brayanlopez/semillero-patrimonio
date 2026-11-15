@@ -1,38 +1,16 @@
 import PageSection from "../../shared/ui/PageSection";
 import DataTable from "../../shared/ui/DataTable";
 import type { DataRow } from "../../shared/ui/DataTable";
+import { workLines } from "./workLines";
 
 type AboutSectionProps = {
   active: boolean;
 };
 
-const workLines: DataRow[] = [
-  {
-    label: "01 / Identificación, inventario y catalogación",
-    value:
-      "Reconocimiento, organización y descripción de las colecciones audiovisuales, documentales y tecnológicas, con el propósito de facilitar su identificación, gestión y consulta.",
-  },
-  {
-    label: "02 / Conservación y preservación",
-    value:
-      "Diagnóstico del estado de los materiales, limpieza, conservación preventiva y desarrollo de estrategias para preservar los soportes, las obras y los equipos tecnológicos.",
-  },
-  {
-    label: "03 / Investigación y creación",
-    value:
-      "Desarrollo de investigaciones y proyectos de creación que exploran las colecciones como fuentes para el estudio de la historia del cine, las prácticas audiovisuales y sus transformaciones.",
-  },
-  {
-    label: "04 / Formación y experimentación",
-    value:
-      "Espacios de aprendizaje y experimentación con archivos, soportes y tecnologías audiovisuales, mediante talleres, prácticas académicas y actividades de los semilleros de investigación.",
-  },
-  {
-    label: "05 / Divulgación",
-    value:
-      "Desarrollo de herramientas de consulta, exposiciones, proyecciones y actividades de circulación que promuevan el conocimiento y la apropiación de las colecciones.",
-  },
-];
+const workLineRows: DataRow[] = workLines.map((line) => ({
+  label: `${line.id} / ${line.title}`,
+  value: line.description,
+}));
 
 const AboutSection = ({ active }: AboutSectionProps) => {
   return (
@@ -70,7 +48,7 @@ const AboutSection = ({ active }: AboutSectionProps) => {
         <h2 className="about-lines-title">
           Del inventario a la investigación.
         </h2>
-        <DataTable rows={workLines} />
+        <DataTable rows={workLineRows} />
       </div>
     </PageSection>
   );

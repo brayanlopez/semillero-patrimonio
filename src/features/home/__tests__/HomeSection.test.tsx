@@ -3,9 +3,13 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import HomeSection from "../HomeSection";
 
+const noop = () => {};
+
 describe("HomeSection", () => {
   it("renders hero titles, copy, stats, and features", () => {
-    render(<HomeSection active={true} onNavigate={() => {}} />);
+    render(
+      <HomeSection active={true} onNavigate={noop} onOpenProject={noop} />,
+    );
 
     expect(
       screen.getByText("Memoria · Imagen · Tecnología"),
@@ -29,11 +33,61 @@ describe("HomeSection", () => {
     expect(screen.getByText("Conservar para consultar")).toBeInTheDocument();
   });
 
+  it("renders the laboratory working lines", () => {
+    render(
+      <HomeSection active={true} onNavigate={noop} onOpenProject={noop} />,
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Líneas de trabajo" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: "Identificación, inventario y catalogación",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Divulgación" }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders the featured project and opens its detail", async () => {
+    const user = userEvent.setup();
+    const handleOpenProject = vi.fn();
+
+    render(
+      <HomeSection
+        active={true}
+        onNavigate={noop}
+        onOpenProject={handleOpenProject}
+      />,
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Proyectos en desarrollo" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Redescubrir la memoria" }),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: "Conocer el proyecto ↗" }),
+    );
+
+    expect(handleOpenProject).toHaveBeenCalledWith("redescubrir-la-memoria");
+  });
+
   it("navigates to catalog when clicking explore catalog button", async () => {
     const user = userEvent.setup();
     const handleNavigate = vi.fn();
 
-    render(<HomeSection active={true} onNavigate={handleNavigate} />);
+    render(
+      <HomeSection
+        active={true}
+        onNavigate={handleNavigate}
+        onOpenProject={noop}
+      />,
+    );
 
     const cta = screen.getByRole("button", {
       name: "Explorar el catálogo ↗",
@@ -47,7 +101,13 @@ describe("HomeSection", () => {
     const user = userEvent.setup();
     const handleNavigate = vi.fn();
 
-    render(<HomeSection active={true} onNavigate={handleNavigate} />);
+    render(
+      <HomeSection
+        active={true}
+        onNavigate={handleNavigate}
+        onOpenProject={noop}
+      />,
+    );
 
     const aboutBtn = screen.getByRole("button", {
       name: "Conocer el laboratorio",
@@ -61,7 +121,13 @@ describe("HomeSection", () => {
     const user = userEvent.setup();
     const handleNavigate = vi.fn();
 
-    render(<HomeSection active={true} onNavigate={handleNavigate} />);
+    render(
+      <HomeSection
+        active={true}
+        onNavigate={handleNavigate}
+        onOpenProject={noop}
+      />,
+    );
 
     const link = screen.getByRole("button", {
       name: "Ver catálogo completo ↗",

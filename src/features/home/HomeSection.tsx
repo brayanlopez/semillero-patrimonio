@@ -1,10 +1,13 @@
 import PageSection from "../../shared/ui/PageSection";
 import FeatureCard from "./FeatureCard";
+import { workLines } from "../about/workLines";
+import { getProjects } from "../projects/projectService";
 import type { PageId } from "../../types/navigation";
 
 type HomeSectionProps = {
   active: boolean;
   onNavigate: (id: PageId) => void;
+  onOpenProject: (slug: string) => void;
 };
 
 const stats = [
@@ -43,7 +46,13 @@ const features = [
   },
 ];
 
-const HomeSection = ({ active, onNavigate }: HomeSectionProps) => {
+const HomeSection = ({
+  active,
+  onNavigate,
+  onOpenProject,
+}: HomeSectionProps) => {
+  const projects = getProjects();
+
   return (
     <PageSection id="home" active={active}>
       <div className="hero">
@@ -92,6 +101,64 @@ const HomeSection = ({ active, onNavigate }: HomeSectionProps) => {
           </div>
         ))}
       </div>
+      <section className="work-lines">
+        <div className="section-head">
+          <div>
+            <div className="kicker">Qué hacemos</div>
+            <h2>Líneas de trabajo</h2>
+          </div>
+          <button className="text-link" onClick={() => onNavigate("about")}>
+            Conocer el laboratorio ↗
+          </button>
+        </div>
+        <div className="work-lines-grid">
+          {workLines.map((line) => (
+            <article className="work-line" key={line.id}>
+              <div className="index">{line.id}</div>
+              <h3>{line.title}</h3>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="featured-projects">
+        <div className="section-head">
+          <div>
+            <div className="kicker">Investigación en curso</div>
+            <h2>Proyectos en desarrollo</h2>
+          </div>
+          <button className="text-link" onClick={() => onNavigate("projects")}>
+            Ver todos los proyectos ↗
+          </button>
+        </div>
+        {projects.map((project) => (
+          <article className="project-feature" key={project.slug}>
+            <div className="project-feature-visual">
+              {project.image ? (
+                <img
+                  className="project-image"
+                  src={project.image.src}
+                  alt={project.image.alt}
+                />
+              ) : (
+                <div className="project-reel" aria-hidden="true"></div>
+              )}
+              <span className="project-visual-tag">{project.category}</span>
+            </div>
+            <div className="project-feature-body">
+              <div className="meta">{project.status ?? project.category}</div>
+              <h3>{project.title}</h3>
+              <p className="project-feature-subtitle">{project.subtitle}</p>
+              <p className="project-feature-copy">{project.shortDescription}</p>
+              <button
+                className="btn"
+                onClick={() => onOpenProject(project.slug)}
+              >
+                Conocer el proyecto ↗
+              </button>
+            </div>
+          </article>
+        ))}
+      </section>
       <section className="featured">
         <div className="section-head">
           <div>
@@ -114,13 +181,17 @@ const HomeSection = ({ active, onNavigate }: HomeSectionProps) => {
             <div className="kicker">El laboratorio</div>
             <h2>Investigar también es una forma de preservar.</h2>
           </div>
-          <p>
-            El Laboratorio de Patrimonio Audiovisual y Tecnológico de la Escuela
-            de Cine y Televisión de la Universidad Nacional de Colombia trabaja
-            alrededor de la identificación, organización, conservación y
-            consulta de materiales vinculados con la memoria audiovisual. Este
-            portal es una puerta de entrada a sus colecciones y procesos.
-          </p>
+          <div className="about-copy">
+            <p>
+              El Laboratorio de Patrimonio Audiovisual y Tecnológico de la
+              Facultad de Artes de la Universidad Nacional de Colombia articula
+              preservación, investigación, formación y divulgación en torno a
+              las colecciones audiovisuales y tecnológicas de la Universidad.
+            </p>
+            <button className="text-link" onClick={() => onNavigate("about")}>
+              Ir al laboratorio ↗
+            </button>
+          </div>
         </div>
       </section>
     </PageSection>
