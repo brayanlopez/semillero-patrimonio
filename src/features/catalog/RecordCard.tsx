@@ -1,5 +1,5 @@
 import type { CatalogRecord } from "../../types/catalog";
-import { visualClasses } from "./records";
+import { visualClasses } from "./catalogOptions";
 
 type RecordCardProps = {
   record: CatalogRecord;

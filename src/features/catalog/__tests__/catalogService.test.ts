@@ -4,14 +4,15 @@ import {
   getCatalogRecordById,
   filterCatalogRecords,
 } from "../catalogService";
-import { catalogRecords } from "../records";
+
+const catalogRecords = getCatalogRecords();
 
 describe("catalogService", () => {
   describe("getCatalogRecords", () => {
     it("returns all catalog records", () => {
       const records = getCatalogRecords();
       expect(records).toEqual(catalogRecords);
-      expect(records.length).toBeGreaterThan(0);
+      expect(records).toHaveLength(6);
     });
   });
 

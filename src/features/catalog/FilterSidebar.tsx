@@ -1,5 +1,5 @@
 import type { CatalogFilters } from "../../types/catalog";
-import { periodOptions, supportOptions, typeOptions } from "./records";
+import { periodOptions, supportOptions, typeOptions } from "./catalogOptions";
 
 type FilterSidebarProps = {
   filters: CatalogFilters;
