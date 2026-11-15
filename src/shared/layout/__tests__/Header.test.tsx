@@ -22,8 +22,12 @@ describe("Header", () => {
       name: "Navegación principal",
     });
     const homeBtn = within(desktopNav).getByRole("button", { name: "Inicio" });
-    const catalogBtn = within(desktopNav).getByRole("button", { name: "Catálogo" });
-    const aboutBtn = within(desktopNav).getByRole("button", { name: "El laboratorio" });
+    const catalogBtn = within(desktopNav).getByRole("button", {
+      name: "Catálogo",
+    });
+    const aboutBtn = within(desktopNav).getByRole("button", {
+      name: "El laboratorio",
+    });
 
     expect(homeBtn).toHaveClass("active");
     expect(catalogBtn).not.toHaveClass("active");
@@ -35,6 +39,89 @@ describe("Header", () => {
 
     rerender(<Header page="about" onNavigate={() => {}} />);
     expect(aboutBtn).toHaveClass("active");
+  });
+
+  it("toggles the mobile menu and updates its accessible state", async () => {
+    const user = userEvent.setup();
+
+    render(<Header page="home" onNavigate={() => {}} />);
+    const mobileNav = screen.getByRole("navigation", {
+      name: "Navegación móvil",
+    });
+    const toggle = screen.getByRole("button", {
+      name: "Abrir menú de navegación",
+    });
+
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(mobileNav).not.toHaveClass("open");
+
+    await user.click(toggle);
+
+    const closeButton = screen.getByRole("button", {
+      name: "Cerrar menú de navegación",
+    });
+    expect(closeButton).toHaveAttribute("aria-expanded", "true");
+    expect(mobileNav).toHaveClass("open");
+
+    await user.click(closeButton);
+    expect(closeButton).toHaveAttribute("aria-expanded", "false");
+    expect(mobileNav).not.toHaveClass("open");
+  });
+
+  it("closes the mobile menu when Escape is pressed", async () => {
+    const user = userEvent.setup();
+
+    render(<Header page="home" onNavigate={() => {}} />);
+    await user.click(
+      screen.getByRole("button", { name: "Abrir menú de navegación" }),
+    );
+
+    await user.keyboard("a");
+    expect(
+      screen.getByRole("button", { name: "Cerrar menú de navegación" }),
+    ).toBeInTheDocument();
+
+    await user.keyboard("{Escape}");
+    expect(
+      screen.getByRole("button", { name: "Abrir menú de navegación" }),
+    ).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("closes the mobile menu when clicking outside the header", async () => {
+    const user = userEvent.setup();
+
+    render(<Header page="home" onNavigate={() => {}} />);
+    await user.click(
+      screen.getByRole("button", { name: "Abrir menú de navegación" }),
+    );
+
+    await user.click(document.body);
+
+    expect(
+      screen.getByRole("button", { name: "Abrir menú de navegación" }),
+    ).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("closes the mobile menu after navigating", async () => {
+    const user = userEvent.setup();
+    const handleNavigate = vi.fn();
+
+    render(<Header page="home" onNavigate={handleNavigate} />);
+    await user.click(
+      screen.getByRole("button", { name: "Abrir menú de navegación" }),
+    );
+
+    const mobileNav = screen.getByRole("navigation", {
+      name: "Navegación móvil",
+    });
+    await user.click(
+      within(mobileNav).getByRole("button", { name: "Proyectos" }),
+    );
+
+    expect(handleNavigate).toHaveBeenCalledWith("projects");
+    expect(
+      screen.getByRole("button", { name: "Abrir menú de navegación" }),
+    ).toHaveAttribute("aria-expanded", "false");
   });
 
   it("calls onNavigate with appropriate page ID on button clicks", async () => {

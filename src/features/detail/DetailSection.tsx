@@ -19,7 +19,6 @@ const DetailSection = ({ active, record, onBack }: DetailSectionProps) => {
     { label: "Formato", value: record.format },
     { label: "Duración", value: record.duration },
     { label: "Idioma", value: record.language },
-    { label: "Cromía", value: record.color },
   ];
 
   return (

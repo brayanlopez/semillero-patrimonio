@@ -1,1 +1,1 @@
-export type PageId = "home" | "catalog" | "detail" | "about";
+export type PageId = "home" | "catalog" | "detail" | "about" | "projects";

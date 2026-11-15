@@ -9,10 +9,10 @@ export type CatalogRecord = {
   period: string;
   duration: string;
   language: string;
-  color: string;
   format: string;
   description: string;
   topics: string[];
+  color?: string;
 };
 
 export type CatalogFilters = {

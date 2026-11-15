@@ -11,7 +11,7 @@ describe("AboutSection", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
-        name: "Preservar las huellas de nuestra cultura audiovisual.",
+        name: "Preservar las huellas de nuestra memoria audiovisual.",
       }),
     ).toBeInTheDocument();
     expect(
@@ -21,9 +21,18 @@ describe("AboutSection", () => {
     ).toBeInTheDocument();
 
     // Check work lines
-    expect(screen.getByText("01 / Identificación")).toBeInTheDocument();
-    expect(screen.getByText("02 / Conservación")).toBeInTheDocument();
-    expect(screen.getByText("03 / Investigación")).toBeInTheDocument();
-    expect(screen.getByText("04 / Divulgación")).toBeInTheDocument();
+    expect(
+      screen.getByText("01 / Identificación, inventario y catalogación"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("02 / Conservación y preservación"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("03 / Investigación y creación"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("04 / Formación y experimentación"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("05 / Divulgación")).toBeInTheDocument();
   });
 });

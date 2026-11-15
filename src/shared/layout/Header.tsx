@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { PageId } from "../../types/navigation";
 
 type HeaderProps = {
@@ -6,46 +6,72 @@ type HeaderProps = {
   onNavigate: (id: PageId) => void;
 };
 
+type NavigationMenuProps = {
+  page: PageId;
+  onNavigate: (id: PageId) => void;
+};
+
+const NAV_ITEMS: ReadonlyArray<{ id: PageId; label: string }> = [
+  { id: "home", label: "Inicio" },
+  { id: "catalog", label: "Catálogo" },
+  { id: "projects", label: "Proyectos" },
+  { id: "about", label: "El laboratorio" },
+];
+
+const NavigationMenu = ({ page, onNavigate }: NavigationMenuProps) => (
+  <>
+    {NAV_ITEMS.map(({ id, label }) => (
+      <button
+        key={id}
+        className={page === id ? "active" : undefined}
+        aria-current={page === id ? "page" : undefined}
+        onClick={() => onNavigate(id)}
+      >
+        {label}
+      </button>
+    ))}
+    <button className="nav-cta" onClick={() => onNavigate("catalog")}>
+      Explorar archivo ↗
+    </button>
+  </>
+);
+
 const Header = ({ page, onNavigate }: HeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
-  // Close menu when navigation happens
   const handleNavigate = (id: PageId) => {
     setMobileMenuOpen(false);
     onNavigate(id);
   };
 
-  // Close menu on Escape key
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileMenuOpen) {
+    if (!mobileMenuOpen) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        headerRef.current &&
+        !headerRef.current.contains(event.target as Node)
+      ) {
         setMobileMenuOpen(false);
       }
     };
 
-    if (mobileMenuOpen) {
-      document.addEventListener("keydown", handleEscape);
-      return () => document.removeEventListener("keydown", handleEscape);
-    }
-  }, [mobileMenuOpen]);
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("click", handleClickOutside);
 
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const header = document.querySelector("header");
-      if (mobileMenuOpen && header && !header.contains(e.target as Node)) {
-        setMobileMenuOpen(false);
-      }
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("click", handleClickOutside);
     };
-
-    if (mobileMenuOpen) {
-      document.addEventListener("click", handleClickOutside);
-      return () => document.removeEventListener("click", handleClickOutside);
-    }
   }, [mobileMenuOpen]);
 
   return (
-    <header>
+    <header ref={headerRef}>
       <div className="header-inner">
         <div className="brand">
           <img src="/favicon.svg" alt="LP" className="brand-mark" />
@@ -57,76 +83,34 @@ const Header = ({ page, onNavigate }: HeaderProps) => {
           </div>
         </div>
 
-        {/* Hamburger menu button (mobile only) */}
         <button
           className="mobile-menu-btn"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Abrir menú de navegación"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          aria-label={
+            mobileMenuOpen
+              ? "Cerrar menú de navegación"
+              : "Abrir menú de navegación"
+          }
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-nav"
         >
           <span className="hamburger">
-            <span className="line line-1"></span>
-            <span className="line line-2"></span>
-            <span className="line line-3"></span>
+            <span className="line line-1" />
+            <span className="line line-2" />
+            <span className="line line-3" />
           </span>
         </button>
 
-        {/* Desktop navigation */}
-        <nav
-          className="desktop-nav"
-          aria-label="Navegación principal"
-        >
-          <button
-            className={page === "home" ? "active" : undefined}
-            onClick={() => handleNavigate("home")}
-          >
-            Inicio
-          </button>
-          <button
-            className={page === "catalog" ? "active" : undefined}
-            onClick={() => handleNavigate("catalog")}
-          >
-            Catálogo
-          </button>
-          <button
-            className={page === "about" ? "active" : undefined}
-            onClick={() => handleNavigate("about")}
-          >
-            El laboratorio
-          </button>
-          <button className="nav-cta" onClick={() => handleNavigate("catalog")}>
-            Explorar archivo ↗
-          </button>
+        <nav className="desktop-nav" aria-label="Navegación principal">
+          <NavigationMenu page={page} onNavigate={handleNavigate} />
         </nav>
 
-        {/* Mobile navigation */}
         <nav
           id="mobile-nav"
           className={`mobile-nav ${mobileMenuOpen ? "open" : ""}`}
           aria-label="Navegación móvil"
         >
-          <button
-            className={page === "home" ? "active" : undefined}
-            onClick={() => handleNavigate("home")}
-          >
-            Inicio
-          </button>
-          <button
-            className={page === "catalog" ? "active" : undefined}
-            onClick={() => handleNavigate("catalog")}
-          >
-            Catálogo
-          </button>
-          <button
-            className={page === "about" ? "active" : undefined}
-            onClick={() => handleNavigate("about")}
-          >
-            El laboratorio
-          </button>
-          <button className="nav-cta" onClick={() => handleNavigate("catalog")}>
-            Explorar archivo ↗
-          </button>
+          <NavigationMenu page={page} onNavigate={handleNavigate} />
         </nav>
       </div>
     </header>

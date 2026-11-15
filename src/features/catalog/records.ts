@@ -112,7 +112,9 @@ export const supportOptions = [
   "DVD",
   "DVCAM",
   "VHS",
-  "Película 16 mm",
+  "miniDV",
+  "Beta",
+  "Digital",
 ];
 
 export const typeOptions = [
@@ -127,6 +129,7 @@ export const typeOptions = [
   "Ficción",
   "Registro",
   "Experimental",
+  "Animación",
 ];
 
 export const periodOptions = [
@@ -134,4 +137,5 @@ export const periodOptions = [
   { value: "1990", label: "1990–1999" },
   { value: "2000", label: "2000–2009" },
   { value: "2010", label: "2010–2019" },
+  { value: "2020", label: "2020–presente" },
 ];

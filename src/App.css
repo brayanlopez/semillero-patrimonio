@@ -542,6 +542,17 @@ main {
   margin: 0;
   max-width: 670px;
 }
+.about-copy {
+  display: grid;
+  align-content: start;
+  gap: 0;
+  max-width: 670px;
+}
+.about-copy p + p {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(37, 43, 40, 0.14);
+}
 .about-band-standalone {
   margin: 35px -34px 70px;
 }
