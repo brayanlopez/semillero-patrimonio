@@ -138,7 +138,7 @@ const MainPage = () => {
         project={selectedProject}
         onBack={() => showPage("projects")}
       />
-      <AboutSection active={page === "about"} />
+      <AboutSection active={page === "about"} onNavigate={showPage} />
     </MainLayout>
   );
 };

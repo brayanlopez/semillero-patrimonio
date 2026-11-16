@@ -20,19 +20,33 @@ describe("AboutSection", () => {
       }),
     ).toBeInTheDocument();
 
-    // Check work lines
+    expect(screen.getAllByRole("listitem")).toHaveLength(5);
     expect(
-      screen.getByText("01 / Identificación, inventario y catalogación"),
+      screen.getByRole("heading", {
+        level: 3,
+        name: "Identificación, inventario y catalogación",
+      }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("02 / Conservación y preservación"),
+      screen.getByRole("heading", {
+        level: 3,
+        name: "Conservación y preservación",
+      }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("03 / Investigación y creación"),
+      screen.getByRole("heading", {
+        level: 3,
+        name: "Investigación y creación",
+      }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("04 / Formación y experimentación"),
+      screen.getByRole("heading", {
+        level: 3,
+        name: "Formación y experimentación",
+      }),
     ).toBeInTheDocument();
-    expect(screen.getByText("05 / Divulgación")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Divulgación" }),
+    ).toBeInTheDocument();
   });
 });
