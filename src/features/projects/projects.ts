@@ -46,7 +46,7 @@ export const projects: Project[] = [
       "El proyecto es desarrollado por el Laboratorio de Patrimonio Audiovisual y Tecnológico de la Facultad de Artes, con la participación del Semillero de Patrimonio Audiovisual.",
     ],
     logo: {
-      src: "/logo_mincultura_blanco.png",
+      src: import.meta.env.BASE_URL + "/logo_mincultura_blanco.png",
       alt: "Ministerio de las Culturas, las Artes y los Saberes",
     },
   },

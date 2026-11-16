@@ -15,12 +15,6 @@ const ProjectsSection = ({ active, onOpenProject }: ProjectsSectionProps) => {
       <div className="catalog-head">
         <div className="kicker">Laboratorio / Iniciativas</div>
         <h1>Proyectos</h1>
-        <p>
-          Iniciativas de identificación, preservación, investigación y
-          divulgación desarrolladas por el Laboratorio de Patrimonio Audiovisual
-          y Tecnológico de la Facultad de Artes de la Universidad Nacional de
-          Colombia.
-        </p>
       </div>
       {projects.length ? (
         <div className="projects-grid">

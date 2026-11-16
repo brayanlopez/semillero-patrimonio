@@ -77,7 +77,11 @@ const Header = ({ page, onNavigate }: HeaderProps) => {
     <header ref={headerRef}>
       <div className="header-inner">
         <div className="brand">
-          <img src="/favicon.svg" alt="LP" className="brand-mark" />
+          <img
+            src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/favicon.svg`}
+            alt="LP"
+            className="brand-mark"
+          />
           <div className="brand-name">
             Laboratorio de Patrimonio
             <br />
